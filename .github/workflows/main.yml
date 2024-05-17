@@ -1,0 +1,29 @@
+name: Send
+
+on:
+  schedule:
+    - cron: "*/2 * * * *"  # Run every 2 minutes
+
+jobs:
+  merge-and-send:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Send merged files
+        run: python SendMail.py
+
+      - name: Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add archive.tar.gz
+          git commit -m "Add archived CSV files"
+          git push
