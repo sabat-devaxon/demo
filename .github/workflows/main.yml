@@ -20,10 +20,3 @@ jobs:
       - name: Send merged files
         run: python SendMail.py
 
-      - name: Push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add archive.tar.gz
-          git commit -m "Add archived CSV files"
-          git push
